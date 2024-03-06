@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
     if rank == 0:
         end_time = MPI.Wtime()
-        print("Runtime (explicit Q): ", end_time - start_time)
+        print("Runtime TSQR (explicit Q): ", end_time - start_time)
 
     # Compute the QR factorization (no Q)
     start_time = MPI.Wtime()
@@ -132,4 +132,4 @@ if __name__ == "__main__":
 
     if rank == 0:
         end_time = MPI.Wtime()
-        print("Runtime (no Q): ", end_time - start_time)
+        print("Runtime TSQR (no Q): ", end_time - start_time)

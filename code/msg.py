@@ -87,4 +87,4 @@ if __name__ == "__main__":
 
     if rank == 0:
         end_time = MPI.Wtime()
-        print("Runtime: ", end_time - start_time)
+        print("Runtime MSG: ", end_time - start_time)

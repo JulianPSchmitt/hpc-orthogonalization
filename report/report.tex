@@ -46,10 +46,10 @@
 
 
 \begin{abstract}
-    We study and compare three algorithms (classical Gram-Schmidt, modified
-    Gram-Schmidt and Tall Skinny $QR$) for the orthogonalization of a set of
-    vectors. The goal is to identify a method that is numerically stable and
-    scales well in parallel.
+    In this project, we study the classical Gram-Schmidt, modified Gram-Schmidt
+    and Tall-Skinny QR algorithms for orthogonalizing a set of vectors. The goal
+    is to identify an efficient method that is numerically stable and scales
+    well in parallel.
 \end{abstract}
 
 
@@ -437,8 +437,8 @@ parallelized version. Note that both algorithms are considerably slower than our
 CGS algorithms.
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\textwidth, trim = 0cm 1.5cm 0cm 1.25cm]{./plots/MGS_Performance.pdf}
     \caption{Runtime of sequential and parallel MGS} \label{fig:performanceMGS}
+    \includegraphics[width=\textwidth, trim = 0cm 1.5cm 0cm 1.25cm]{./plots/MGS_Performance.pdf}
 \end{figure}
 
 \subsection{Numerical Stability of MGS}
@@ -691,9 +691,9 @@ $\kappa(Q)$ is $1$ for all matrices.
 
 \begin{figure}[t]
     \centering %
+    \caption{TSQR - Orthogonality loss and $\kappa(Q)$ as function of $\kappa(W)$}
     \includegraphics[width=\textwidth, trim = 0cm 0cm 0cm 1cm]
         {./plots/TSQR_Orthogonality_Error_complete.pdf}
-    \caption{TSQR - Orthogonality loss and $\kappa(Q)$ as function of $\kappa(W)$}
     \label{fig:orthoErrorTSQR}
 \end{figure}
 
