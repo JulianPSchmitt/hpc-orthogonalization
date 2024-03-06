@@ -7,6 +7,14 @@ import data
 
 
 def tsqr(A: np.ndarray, rows: int, cols: int, comm: MPI.Comm):
+    """
+    Parallel compute the thin QR factorization of the input matrix A via
+    Tall-Skinny QR algorithm. Uses the processors from the given MPI
+    communicator and Numpy's QR as a subroutine. The method computes 'Q'
+    explicitly.
+
+    Returns 'Q' (in-place) and 'R' on root processor.
+    """
     # Setup matrices on all processors
     size = comm.Get_size()
     rank = comm.Get_rank()
@@ -60,6 +68,14 @@ def tsqr(A: np.ndarray, rows: int, cols: int, comm: MPI.Comm):
 
 
 def tsqr_no_Q(A: np.ndarray, rows: int, cols: int, comm: MPI.Comm):
+    """
+    Parallel compute the thin QR factorization of the input matrix A via
+    Tall-Skinny QR algorithm. Uses the processors from the given MPI
+    communicator and Numpy's QR as a subroutine. The method computes 'Q' only
+    implicitly.
+
+    Returns 'Q' (in-place) and 'R' on root processor.
+    """
     # Setup matrices on all processors
     size = comm.Get_size()
     rank = comm.Get_rank()
@@ -83,8 +99,7 @@ def tsqr_no_Q(A: np.ndarray, rows: int, cols: int, comm: MPI.Comm):
             break
         P_new = (P_new + 1) // 2
 
-    comm.Gatherv(Qs[0], A)
-    return A
+    return Qs, R
 
 
 # run using 4 processors:
@@ -113,7 +128,7 @@ if __name__ == "__main__":
 
     # Compute the QR factorization (no Q)
     start_time = MPI.Wtime()
-    Q = tsqr_no_Q(A, rows, cols, comm)
+    Qs, R = tsqr_no_Q(A, rows, cols, comm)
 
     if rank == 0:
         end_time = MPI.Wtime()
