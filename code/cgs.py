@@ -1,16 +1,14 @@
-from mpi4py import MPI
-import numpy as np
 from os import environ
 environ['OMP_NUM_THREADS'] = '1'  # deactivate BLAS multithreading
-
-
-def f(mu, x):
-    return np.sin(10 * (mu + x)) / (np.cos(100 * (mu - x)) + 1.1)
+from mpi4py import MPI
+import numpy as np
+import data
 
 
 def cgs_sequential(A: np.ndarray):
     """
-    Sequentially compute the thin QR factorization of the input matrix A.
+    Sequentially compute the thin QR factorization of the input matrix A via
+    classical Gram-Schmidt.
 
     Returns 'Q' (in-place) and 'R'.
     """
@@ -28,10 +26,10 @@ def cgs_sequential(A: np.ndarray):
 
 def cgs_parallel(A: np.ndarray, rows: int, cols: int, comm: MPI.Comm):
     """
-    Parallel compute the thin QR factorization of the input matrix A. Uses the
-    processors from the given MPI communicator.
+    Parallel compute the thin QR factorization of the input matrix A via
+    classical Gram-Schmidt. Uses the processors from the given MPI communicator.
 
-    Returns 'Q' (in-place) and 'R'.
+    Returns 'Q' (in-place) and 'R' on root processor.
     """
     # Setup matrices on all processors
     size = comm.Get_size()
@@ -73,10 +71,7 @@ if __name__ == "__main__":
     A = None
 
     if rank == 0:
-        A = np.fromfunction(lambda i, j: f(
-            ((i - 1) / (rows - 1)), ((j - 1) / (cols - 1))),
-            (rows, cols),
-            dtype=float)
+        A = data.W1(rows, cols)
 
     # Compute the QR factorization
     start_time = MPI.Wtime()
