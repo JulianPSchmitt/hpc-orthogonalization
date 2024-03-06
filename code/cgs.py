@@ -59,6 +59,8 @@ def cgs_parallel(A: np.ndarray, rows: int, cols: int, comm: MPI.Comm):
     return A, R
 
 
+# run using 4 processors:
+# mpiexec -n 4 python csg.py
 if __name__ == "__main__":
     # Initialize MPI
     comm = MPI.COMM_WORLD

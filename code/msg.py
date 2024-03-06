@@ -1,8 +1,8 @@
-import data
-from mpi4py import MPI
-import numpy as np
 from os import environ
 environ['OMP_NUM_THREADS'] = '1'
+from mpi4py import MPI
+import numpy as np
+import data
 
 
 def mgs_sequential(A: np.array):
@@ -62,6 +62,8 @@ def mgs_parallel(A: np.ndarray, rows: int, cols: int, comm: MPI.Comm):
     return A, R
 
 
+# run using 4 processors:
+# mpiexec -n 4 python msg.py
 if __name__ == "__main__":
     # Initialize MPI
     comm = MPI.COMM_WORLD
